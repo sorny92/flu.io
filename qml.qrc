@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>glcode.js</file>
+        <file>three.js</file>
+        <file>soldier.js</file>
+        <file>cursor.js</file>
+    </qresource>
+</RCC>
