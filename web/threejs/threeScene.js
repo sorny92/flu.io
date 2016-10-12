@@ -36,7 +36,7 @@ function initializeGL(){
 	keyboard = new KeyboardState();
 
 	camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
-    camera.position.z = 50;
+	camera.position.z = 250;
 	
 	renderer = new THREE.WebGLRenderer();
 	renderer = new THREE.WebGLRenderer();
@@ -49,19 +49,24 @@ function initializeGL(){
 	container.appendChild(renderer.domElement);
 
 	soldier = new Soldier();
-    scene.add(soldier);
+	scene.add(soldier);
 
-    cursor = new Cursor();
-    scene.add(cursor);
+	cursor = new Cursor();
+	scene.add(cursor);
 
-    soldiers = loadSoldiersIntoArray();
+	soldiers = loadSoldiersIntoArray();
 }
 function loadSoldiersIntoArray(){
 	var soldiers = [];
-	for(var i = 0;i < 5; i++){
-		soldiers.push(soldier);
-		scene.add(soldier);
+	for(var i = 0;i < 5000; i++){
+		var randomX = Math.floor((Math.random() * 500) - 250);
+		var randomY = Math.floor((Math.random() * 500) - 250);
+		soldiers.push(new Soldier());
+		scene.add(soldiers[i]);
+		soldiers[i].position.x = randomX;
+		soldiers[i].position.y = randomY;
 	}
+	return soldiers;
 }
 
 function updateFromKeyboard() {
@@ -88,4 +93,12 @@ function updateFromKeyboard() {
 	// controls.update();
 	//stats.update();
 	return pressed;
+}
+
+function updateSoldiers() {
+	for(var i = 0; i < soldiers.length; i++){
+		var vector = getVectorBetween(soldiers[i], cursor);
+		soldiers[i].translateX(0.5 * vector[0]);
+		soldiers[i].translateY(0.5 * vector[1]);
+	};
 }
