@@ -26,7 +26,8 @@ render();
 
 function render() {
 	requestAnimationFrame(render);
-	//moveBots();
+	updateFromKeyboard();
+	updateSoldiers();
 	renderer.render(scene, camera);
 }
 
@@ -47,8 +48,20 @@ function initializeGL(){
 	container = document.getElementById('ThreeJS');
 	container.appendChild(renderer.domElement);
 
-	soldier = new Soldier;
+	soldier = new Soldier();
     scene.add(soldier);
+
+    cursor = new Cursor();
+    scene.add(cursor);
+
+    soldiers = loadSoldiersIntoArray();
+}
+function loadSoldiersIntoArray(){
+	var soldiers = [];
+	for(var i = 0;i < 5; i++){
+		soldiers.push(soldier);
+		scene.add(soldier);
+	}
 }
 
 function updateFromKeyboard() {
@@ -57,22 +70,22 @@ function updateFromKeyboard() {
 
 	var pressed = false;
 	if (keyboard.pressed("left")) {
-		human.translateX(-moveDistance);
+		cursor.translateX(-moveDistance);
 		pressed = true;
 	}
 	if (keyboard.pressed("right")) {
-		human.translateX(moveDistance);
+		cursor.translateX(moveDistance);
 		pressed = true;
 	}
 	if (keyboard.pressed("up")) {
-		human.translateZ(-moveDistance);
+		cursor.translateY(moveDistance);
 		pressed = true;
 	}
 	if (keyboard.pressed("down")) {
-		human.translateZ(moveDistance);
+		cursor.translateY(-moveDistance);
 		pressed = true;
 	}
 	// controls.update();
-	stats.update();
+	//stats.update();
 	return pressed;
 }
